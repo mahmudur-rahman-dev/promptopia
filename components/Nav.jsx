@@ -9,6 +9,7 @@ const Nav = () => {
     const isUserLoggedIn = true;
 
     const [providers, setProviders] = useState(null);
+    const [toggleDown, setToggleDown] = useState(false)
 
     useEffect(() => {
         const setProviders = async () => {
@@ -81,10 +82,38 @@ const Nav = () => {
                             width={37}
                             height={37}
                             className="rounded-full"
-                            onClick={() => {}}
+                            onClick={() => setToggleDown((prev) => !prev)}
                         />
+
+                        {toggleDown && (
+                            <div className="dropdown">
+                                <Link
+                                    href="/profile"
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDown(false)}
+                                >
+                                    My Profile
+                                </Link>
+                                <Link
+                                    href="/create-prompt"
+                                    className="dropdown_link"
+                                    onClick={() => setToggleDown(false)}
+                                >
+                                    Create Prompt
+                                </Link>
+                                <button
+                                type="button"
+                                onClick={() => {
+                                    setToggleDown(false);
+                                    signOut();
+                                }}
+                                className="mt-5 w-full black_btn">
+                                    Sign Out
+                                </button>
+                            </div>
+                        )}
                     </div>
-                ): (
+                ) : (
                     <>
                         {providers && Object.values(providers).map((provider) => (
                             <button
